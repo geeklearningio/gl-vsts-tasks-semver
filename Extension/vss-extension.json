@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "gl-vsts-tasks-semver",
-    "name": "File patch Build and Release Tasks",
+    "name": "Semantic Versionning Build and Release Tasks",
     "version": "0.0.18",
     "publisher": "geeklearningio",    
     "targets": [

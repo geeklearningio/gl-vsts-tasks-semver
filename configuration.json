@@ -8,8 +8,7 @@
             ],
             "DisplayNamesSuffix": "",
             "TaskIds": {
-                "JsonPatch": "DEEAA603-DA23-43AB-A099-33AEFE358520",
-                "XmlPatch": "ACEE093C-D84E-456E-B6F3-1D65969291BD"
+                "EncodeSemverToInteger": "2F10E88D-82C6-44E5-8D78-3BB1AB452EC0"
             }
         },
         {
@@ -18,8 +17,7 @@
             "VssExtensionGalleryFlags": [],
             "DisplayNamesSuffix": " (Preview)",
             "TaskIds": {
-                "JsonPatch": "1309EACE-BCEB-46A5-872A-9D9E33820D1D",
-                "XmlPatch": "FBDB24F0-CC20-4927-AF82-18421B3DA3CD"
+                "EncodeSemverToInteger": "6CE03247-52FE-4AF9-91DB-1F0213DDC350"
             }
         },
         {
@@ -27,9 +25,8 @@
             "VssExtensionIdSuffix": "-dev",
             "VssExtensionGalleryFlags": [],
             "DisplayNamesSuffix": " (Development)",
-            "TaskIds": {
-                "JsonPatch": "578A87B3-5A3F-461B-828D-E53DA43A8F3A",
-                "XmlPatch": "BD8DCFA1-1592-4DA9-8437-871752577791"
+           	"TaskIds": {
+                "EncodeSemverToInteger": "CE614B23-BA8F-406D-89F7-7B277BA68B29"
             }
         }
     ]

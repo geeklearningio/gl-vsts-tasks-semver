@@ -1,0 +1,79 @@
+{
+    "id": "2F10E88D-82C6-44E5-8D78-3BB1AB452EC0",
+    "name": "EncodeSemverToInteger",
+    "friendlyName": "Encodes Semver To Integer",
+    "description": "Encodes a semantic version number to integer",
+    "helpMarkDown": "[More Information](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki/Encode-Semver-To-Integer) (Version #{Version}#)",    
+    "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "author": "Geek Learning",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 49
+    },
+    "demands": [
+        "npm"
+    ],
+    "minimumAgentVersion": "1.91.0",
+    "instanceNameFormat": "Encodes semver $(SourceSemver)",
+    "inputs": [
+        {
+            "name": "SourceSemver",
+            "type": "string",
+            "label": "Semver to be encoded",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "ex : $(GitVersion_SemVer)"
+        },
+        {
+            "name": "MinorBits",
+            "type": "string",
+            "label": "Minor bits",
+            "defaultValue": "6",
+            "required": true,
+            "helpMarkDown": "Bits used to encode minor"
+        },
+        {
+            "name": "PatchBits",
+            "type": "string",
+            "label": "Patch bits",
+            "defaultValue": "5",
+            "required": true,
+            "helpMarkDown": "Bits used to encode patch"
+        },
+        {
+            "name": "PreReleaseTagBits",
+            "type": "string",
+            "label": "PreReleaseTag bits",
+            "defaultValue": "2",
+            "required": true,
+            "helpMarkDown": "Bits used to encode PreReleaseTag"
+        },
+        {
+            "name": "PreReleaseTagMap",
+            "type": "string",
+            "label": "PreReleaseTagBits Map",
+            "defaultValue": "{\"rc\": 2, \"beta\": 1, \"alpha\": 0, \"unstable\": 0}",
+            "required": true,
+            "helpMarkDown": "Map used to encode PreReleaseTag"
+        },
+        {
+            "name": "PreReleaseNumberBits",
+            "type": "string",
+            "label": "PreReleaseNumberMinor bits",
+            "defaultValue": "10",
+            "required": true,
+            "helpMarkDown": "Bits used to encode PreReleaseNumber"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "semvertoandroidversioncode.js",
+            "argumentFormat": ""
+        }
+    }
+}

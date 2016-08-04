@@ -29,6 +29,6 @@ Visual Studio Team Services Build and Release Management extensions that help yo
 This extension was created by [Geek Learning](http://geeklearning.io/), with help from the community.
 
 ## Attributions
-
+* [Mushroom by Lucian Novosel from the Noun Project](https://thenounproject.com/search/?q=mario&i=18500)
 * [Pull request by Richard Slater from the Noun Project](https://thenounproject.com/search/?q=version&i=116190)
 * [Connection by Jason D. Rowley from the Noun Project](https://thenounproject.com/search/?q=version&i=18989)

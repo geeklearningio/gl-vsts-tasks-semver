@@ -1,15 +1,15 @@
 {
     "manifestVersion": 1,
     "id": "gl-vsts-tasks-semver",
-    "name": "Semantic Versionning Build and Release Tasks",
-    "version": "0.0.18",
+    "name": "Semantic Versioning Build and Release Tasks",
+    "version": "0.0.0",
     "publisher": "geeklearningio",    
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Build and Release Management extensions that help you work with semantic versioning.",
+    "description": "Visual Studio Team Services Build and Release Management extensions that help you work with semantic versioning.",
     "categories": [
         "Build and release"
     ],
@@ -19,6 +19,11 @@
     "tags": [
         "semver",
         "version"
+    ],
+    "screenshots": [
+        {
+            "path": "Screenshots/Add-Tasks.png"
+        }
     ],
     "content": {
         "details": {
@@ -49,7 +54,10 @@
     "files": [
         {
             "path": "Tasks"
+        },
+        {
+            "path": "Screenshots",
+            "addressable": true
         }
-    ],
-    "contributions": []
+    ]
 }

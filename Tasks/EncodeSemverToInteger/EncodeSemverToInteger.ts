@@ -2,8 +2,8 @@ import path = require('path');
 import fs = require('fs-extra');
 import tl = require('vsts-task-lib/task');
 import semver = require('semver');
-try {
 
+try {
     var sourceSemVer = tl.getInput("SourceSemver");
     var minorBits = parseInt(tl.getInput("MinorBits"));
     var patchBits = parseInt(tl.getInput("PatchBits"));
@@ -66,6 +66,7 @@ try {
     tl.setVariable(outputVariable, code.toString());
 
     tl.setResult(tl.TaskResult.Succeeded, "Code encoded");
+
 } catch (err) {
     console.error(String(err));
     tl.setResult(tl.TaskResult.Failed, String(err));

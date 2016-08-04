@@ -1,8 +1,8 @@
 {
     "id": "2F10E88D-82C6-44E5-8D78-3BB1AB452EC0",
     "name": "EncodeSemverToInteger",
-    "friendlyName": "Encodes Semver To Integer",
-    "description": "Encodes a semantic version number to integer",
+    "friendlyName": "Encode Semver To Integer",
+    "description": "Encode a semantic versioning number to an integer, assigning each part to configurable bits",
     "helpMarkDown": "[More Information](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki/Encode-Semver-To-Integer) (Version #{Version}#)",    
     "category": "Utility",
     "visibility": [
@@ -13,13 +13,13 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 49
+        "Patch": 0
     },
     "demands": [
         "npm"
     ],
     "minimumAgentVersion": "1.91.0",
-    "instanceNameFormat": "Encodes semver $(SourceSemver)",
+    "instanceNameFormat": "Encode Semver $(SourceSemver)",
     "inputs": [
         {
             "name": "SourceSemver",
@@ -41,7 +41,7 @@
             "name": "MinorBits",
             "type": "string",
             "label": "Minor bits",
-            "defaultValue": "6",
+            "defaultValue": "5",
             "required": true,
             "helpMarkDown": "Bits used to encode minor"
         },
@@ -49,7 +49,7 @@
             "name": "PatchBits",
             "type": "string",
             "label": "Patch bits",
-            "defaultValue": "5",
+            "defaultValue": "4",
             "required": true,
             "helpMarkDown": "Bits used to encode patch"
         },
@@ -73,14 +73,14 @@
             "name": "PreReleaseNumberBits",
             "type": "string",
             "label": "PreReleaseNumberMinor bits",
-            "defaultValue": "10",
+            "defaultValue": "9",
             "required": true,
             "helpMarkDown": "Bits used to encode PreReleaseNumber"
         }
     ],
     "execution": {
         "Node": {
-            "target": "semvertoandroidversioncode.js",
+            "target": "EncodeSemverToInteger.js",
             "argumentFormat": ""
         }
     }

@@ -1,16 +1,24 @@
-# Semver Build and Release Tasks
+# Build and release tasks for Semantic Versioning
 
 Visual Studio Team Services Build and Release Management extensions that help you work with semantic versioning.
 
-## Install the extension to your account
-
-You can find the latest stable version of the VSTS Extension tasks on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=geeklearningio.gl-vsts-tasks-semver).
-
-## Prerelease channel
-
-Our tasks are build and published in continuous (thanks to VSTS, of course). If you are interested or want to contribute, you can ask us the access of the private prerelease extension to install it to your account.
-By definition, this prerelease extension could introduce breaking changes, or could be very unstable, so it is not recommended to use it for your builds and releases, but only for testing purposes.
+[Learn more](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki) about this extension on the wiki!
 
 ## Tasks included
 
-* **[Encode Semver To Integer](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki/Encode-Semver-To-Integer)**: Encode semver to integer
+* **[Encode Semver To Integer](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki/Encode Semver To Integer)**: Encode a semantic versioning number to an integer, assigning each part to configurable bits
+
+## Steps
+
+After installing the extension, you can add one (or more) of the tasks to a new or existing [build definition](https://www.visualstudio.com/en-us/docs/build/define/create) or [release definition](https://www.visualstudio.com/en-us/docs/release/author-release-definition/more-release-definition)
+
+![add-task](Screenshots/Add-Tasks.png)
+
+## Learn more
+
+The [source](https://github.com/geeklearningio/gl-vsts-tasks-semver) for this extension is on GitHub. Take, fork, and extend.
+
+## Release Notes
+
+> **8-3-2016**
+> - Added: Encode Semver To Integer

@@ -25,7 +25,7 @@
     "VSTS",
     "build",
     "tasks",
-    "Azure"
+    "semver"
   ],
   "author": "Geek Learning, Adrien Siffermann, Cyprien Autexier",
   "license": "MIT",

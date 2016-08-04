@@ -1,3 +1,11 @@
+![Icon](https://github.com/geeklearningio/gl-vsts-tasks-semver/blob/master/Extension/extension-icon.png)
+
+# Semantic Versioning Build and Release Tasks
+
+![cistatus](https://geeklearning.visualstudio.com/_apis/public/build/definitions/f841b266-7595-4d01-9ee1-4864cf65aa73/49/badge)
+
+Visual Studio Team Services Build and Release Management extensions that help you work with semantic versioning.
+
 [Learn more](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki) about this extension on the wiki!
 
 ## Tasks included

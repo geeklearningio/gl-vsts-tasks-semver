@@ -9,7 +9,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Visual Studio Team Services Build and Release Management extensions that help you work with semantic versioning.",
+    "description": "Build and Release Management extensions that help you work with semantic versioning.",
     "categories": [
         "Build and release"
     ],

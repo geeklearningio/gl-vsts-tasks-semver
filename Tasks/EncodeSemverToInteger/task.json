@@ -30,6 +30,14 @@
             "helpMarkDown": "ex : $(GitVersion_SemVer)"
         },
         {
+            "name": "OutputVariable",
+            "type": "string",
+            "label": "Output variable name",
+            "defaultValue": "VersionCode",
+            "required": true,
+            "helpMarkDown": "ex : VersionCode, which can be further consumed by using $(VersionCode)"
+        },
+        {
             "name": "MinorBits",
             "type": "string",
             "label": "Minor bits",

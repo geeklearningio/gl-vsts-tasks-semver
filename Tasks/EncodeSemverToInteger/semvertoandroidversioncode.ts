@@ -10,6 +10,7 @@ try {
     var preReleaseTagBits = parseInt(tl.getInput("PreReleaseTagBits"));
     var preReleaseTagMap = JSON.parse(tl.getInput("PreReleaseTagMap"));
     var preReleaseNumberBits = parseInt(tl.getInput("PreReleaseNumberBits"));
+    var outputVariable = tl.getInput("OutputVariable");
 
     var varRegex = /\$\((.*?)\)/g;
     sourceSemVer = sourceSemVer.replace(varRegex, (match, varName, offset, string) => tl.getVariable(varName));
@@ -62,7 +63,7 @@ try {
     code += preReleaseNumber;
 
     console.log("computed versioncode : " + code.toString());
-    tl.setVariable("Android_Semver_Encoded", code.toString());
+    tl.setVariable(outputVariable, code.toString());
 
     tl.setResult(tl.TaskResult.Succeeded, "Code encoded");
 } catch (err) {

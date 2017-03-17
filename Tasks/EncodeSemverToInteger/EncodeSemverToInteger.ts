@@ -1,25 +1,38 @@
-import { Encoder } from "./encoder";
+import { Encoder, EncodingConfiguration, IPrereleaseTagMap } from "./encoder";
 import tl = require("vsts-task-lib/task");
 import semver = require("semver");
 
 try {
+
+    let checkNaN = (numberToCheck: number, numberName: string): number => {
+        if (isNaN(numberToCheck)) {
+            throw new Error(numberName + " is not a valid number.");
+        }
+
+        return numberToCheck;
+    };
+
+    let getNumberInput = (inputName: string): number => {
+        return checkNaN(parseInt(tl.getInput(inputName)), inputName);
+    };
+
     let sourceSemVer = tl.getInput("SourceSemver");
-    let minorBits = parseInt(tl.getInput("MinorBits"));
-    let patchBits = parseInt(tl.getInput("PatchBits"));
-    let preReleaseTagBits = parseInt(tl.getInput("PreReleaseTagBits"));
-    let preReleaseTagMap = JSON.parse(tl.getInput("PreReleaseTagMap"));
-    let preReleaseNumberBits = parseInt(tl.getInput("PreReleaseNumberBits"));
+    let minorBits = getNumberInput("MinorBits");
+    let patchBits = getNumberInput("PatchBits");
+    let preReleaseTagBits = getNumberInput("PreReleaseTagBits");
+    let preReleaseTagMap: IPrereleaseTagMap = JSON.parse(tl.getInput("PreReleaseTagMap"));
+    let preReleaseNumberBits = getNumberInput("PreReleaseNumberBits");
     let outputVariable = tl.getInput("OutputVariable");
 
     let varRegex = /\$\((.*?)\)/g;
     sourceSemVer = sourceSemVer.replace(varRegex, (match, varName, offset, s) => tl.getVariable(varName));
 
-    console.log("SourceSemVer : " + sourceSemVer);
+    console.log("Source Semver: " + sourceSemVer);
 
-    let encoder = new Encoder(sourceSemVer);
-    let code = encoder.encode(minorBits, patchBits, preReleaseTagBits, preReleaseTagMap, preReleaseNumberBits);
+    let encoder = new Encoder(new EncodingConfiguration(minorBits, patchBits, preReleaseTagBits, preReleaseTagMap, preReleaseNumberBits));
+    let code = checkNaN(encoder.encode(sourceSemVer), "Computed Version Code");
 
-    console.log("computed versioncode : " + code.toString());
+    console.log("Computed Version Code: " + code.toString());
     tl.setVariable(outputVariable, code.toString());
 
     tl.setResult(tl.TaskResult.Succeeded, "Code encoded");

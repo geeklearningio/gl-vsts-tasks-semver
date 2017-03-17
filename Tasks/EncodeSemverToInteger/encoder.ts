@@ -1,54 +1,79 @@
 import semver = require("semver");
 
+export interface IPrereleaseTagMap {
+    [key: string]: number;
+}
+
+export class EncodingConfiguration {
+    readonly majorBits: number = 31 - this.minorBits - this.patchBits - this.prereleaseNumberBits - this.prereleaseTagBits;
+
+    readonly maxPrereleaseTagCode = Math.pow(2, this.prereleaseTagBits) - 1;
+    readonly maxPrereleaseNumberCode = Math.pow(2, this.prereleaseNumberBits) - 1;
+
+    constructor(
+        readonly minorBits: number,
+        readonly patchBits: number,
+        readonly prereleaseTagBits: number,
+        readonly prereleaseTagMap: IPrereleaseTagMap,
+        readonly prereleaseNumberBits: number,
+        readonly friendlyName: string = "Default") {
+    }
+}
+
 export class Encoder {
-    constructor(private sourceSemVer: string) {
+    constructor(private configuration: EncodingConfiguration) {
     }
 
-    private checkBounds(value: number, bits: number, name: string) {
-        if (value >= (Math.pow(2, bits))) {
-            throw new Error(name + " will overflow allocated bits. " + value.toString() + " >= " + (Math.pow(2, bits)).toString());
+    private checkOverflow(value: number, bits: number, name: string) {
+        let maxValue = Math.pow(2, bits);
+        if (value >= maxValue) {
+            throw new Error(name + " will overflow allocated bits (" + value.toString() + " >= " + maxValue.toString() + ").");
         }
     }
 
-    encode(minorBits: number, patchBits: number, preReleaseTagBits: number, preReleaseTagMap: any, preReleaseNumberBits: number): number {
-        let majorBits = 32 - minorBits - patchBits - preReleaseNumberBits - preReleaseTagBits;
-
-        let parsedSemver = new semver.SemVer(this.sourceSemVer, false);
+    encode(sourceSemver: string): number {
+        let parsedSemver = new semver.SemVer(sourceSemver, false);
 
         let code: number = 0;
 
-        this.checkBounds(parsedSemver.major, majorBits, "major");
+        this.checkOverflow(parsedSemver.major, this.configuration.majorBits, "Major");
         code += parsedSemver.major;
 
-        this.checkBounds(parsedSemver.minor, minorBits, "minor");
-        code = code << minorBits;
+        this.checkOverflow(parsedSemver.minor, this.configuration.minorBits, "Minor");
+        code = code << this.configuration.minorBits;
         code += parsedSemver.minor;
 
-        this.checkBounds(parsedSemver.patch, patchBits, "patch");
-        code = code << patchBits;
+        this.checkOverflow(parsedSemver.patch, this.configuration.patchBits, "Patch");
+        code = code << this.configuration.patchBits;
         code += parsedSemver.patch;
 
-        let preReleaseTagCode: number = Math.pow(2, preReleaseTagBits) - 1;
-        let preReleaseNumber: number = Math.pow(2, preReleaseNumberBits) - 1;
+        let prereleaseTagCode = this.configuration.maxPrereleaseTagCode;
+        let prereleaseNumberCode = this.configuration.maxPrereleaseNumberCode;
         if (parsedSemver.prerelease && parsedSemver.prerelease.length) {
-            let mapResult = preReleaseTagMap[parsedSemver.prerelease[0]];
+            prereleaseTagCode = 0;
+            prereleaseNumberCode = 0;
+
+            let mapResult = this.configuration.prereleaseTagMap[parsedSemver.prerelease[0]];
             if (mapResult) {
-                preReleaseTagCode = mapResult;
-            } else {
-                preReleaseTagCode = 0;
+                if (mapResult === this.configuration.maxPrereleaseTagCode) {
+                    throw new Error("The max allowed Prerelease Tag value (" + this.configuration.maxPrereleaseTagCode + ") should be kept for Semver without Prerelease Tag.");
+                }
+
+                prereleaseTagCode = mapResult;
             }
+
             if (parsedSemver.prerelease.length > 1) {
-                preReleaseNumber = parseInt(parsedSemver.prerelease[1]);
+                prereleaseNumberCode = parseInt(parsedSemver.prerelease[1]);
             }
         }
 
-        this.checkBounds(preReleaseTagCode, preReleaseTagBits, "preReleaseTagBits");
-        code = code << preReleaseTagBits;
-        code += preReleaseTagCode;
+        this.checkOverflow(prereleaseTagCode, this.configuration.prereleaseTagBits, "Prerelease Tag");
+        code = code << this.configuration.prereleaseTagBits;
+        code += prereleaseTagCode;
 
-        this.checkBounds(preReleaseNumber, preReleaseNumberBits, "preReleaseNumberBits");
-        code = code << preReleaseNumberBits;
-        code += preReleaseNumber;
+        this.checkOverflow(prereleaseNumberCode, this.configuration.prereleaseNumberBits, "Prerelease Number");
+        code = code << this.configuration.prereleaseNumberBits;
+        code += prereleaseNumberCode;
 
         return code;
     }

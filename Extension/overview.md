@@ -6,7 +6,7 @@ Visual Studio Team Services Build and Release Management extensions that help yo
 
 ## Tasks included
 
-* **[Encode Semver To Integer](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki/Encode Semver To Integer)**: Encode a semantic versioning number to an integer, assigning each part to configurable bits
+* **[Encode Semver To Integer](https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki/Encode-Semver-To-Integer)**: Encode a semantic versioning number to an integer, assigning each part to configurable bits
 
 ## Steps
 
@@ -14,11 +14,16 @@ After installing the extension, you can add one (or more) of the tasks to a new 
 
 ![add-task](Screenshots/Add-Tasks.png)
 
+![test-build](Screenshots/TestBuild.png)
+
 ## Learn more
 
 The [source](https://github.com/geeklearningio/gl-vsts-tasks-semver) for this extension is on GitHub. Take, fork, and extend.
 
 ## Release Notes
+
+> **3-20-2017**
+> - Fix few bugs and add unit tests
 
 > **8-3-2016**
 > - Added: Encode Semver To Integer

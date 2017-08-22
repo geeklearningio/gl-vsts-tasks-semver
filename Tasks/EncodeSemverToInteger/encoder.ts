@@ -5,12 +5,13 @@ export interface IPrereleaseTagMap {
 }
 
 export class EncodingConfiguration {
-    readonly majorBits: number = 31 - this.minorBits - this.patchBits - this.prereleaseNumberBits - this.prereleaseTagBits;
+    readonly majorBits: number = this.totalBits - this.minorBits - this.patchBits - this.prereleaseNumberBits - this.prereleaseTagBits;
 
     readonly maxPrereleaseTagCode = Math.pow(2, this.prereleaseTagBits) - 1;
     readonly maxPrereleaseNumberCode = Math.pow(2, this.prereleaseNumberBits) - 1;
 
     constructor(
+        readonly totalBits: number,
         readonly allowZeroBitAllocation: boolean,
         readonly minorBits: number,
         readonly patchBits: number,

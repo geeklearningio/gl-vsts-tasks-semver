@@ -21,6 +21,13 @@
     ],
     "minimumAgentVersion": "1.91.0",
     "instanceNameFormat": "Encode Semver $(SourceSemver)",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced options",
+            "isExpanded": false
+        }
+    ],
     "inputs": [
         {
             "name": "SourceSemver",
@@ -79,11 +86,21 @@
             "helpMarkDown": "Bits used to encode PreReleaseNumber"
         },
         {
-            "name": "disableZeroBitAllocation",
+            "groupName": "advanced",
+            "name": "DisableZeroBitAllocation",
             "type": "boolean",
             "label": "Allow zero bit allocation",
             "defaultValue": "false",
             "helpMarkDown": "If this is enabled you can specify a 0 bit allocation for more or one component without it triggering an overflow error."
+        },
+        {
+            "groupName": "advanced",
+            "name": "TotalBits",
+            "type": "string",
+            "label": "Total bits",
+            "defaultValue": "31",
+            "required": true,
+            "helpMarkDown": "defaults to signed int 32 available bits. You can tweak this value if you want to encode over a larger or smaller integer size."
         }
     ],
     "execution": {

@@ -26,10 +26,11 @@ interface IExpectedErrors {
     [key: string]: string;
 }
 
-let onlyPrereleaseConfiguration = new EncodingConfiguration(true, 0, 0, 2, { "rc": 2, "beta": 1, "alpha": 0, "unstable": 0 }, 29);
-let defaultConfiguration = new EncodingConfiguration(false, 5, 4, 2, { "rc": 2, "beta": 1, "alpha": 0, "unstable": 0 }, 9);
-let balancedConfiguration = new EncodingConfiguration(false, 6, 5, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 9, "Balanced");
-let distributedConfiguration = new EncodingConfiguration(false, 7, 7, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 7, "Distributed");
+let onlyPrereleaseConfiguration = new EncodingConfiguration(31, true, 0, 0, 2, { "rc": 2, "beta": 1, "alpha": 0, "unstable": 0 }, 29);
+let defaultConfiguration = new EncodingConfiguration(31, false, 5, 4, 2, { "rc": 2, "beta": 1, "alpha": 0, "unstable": 0 }, 9);
+let balancedConfiguration = new EncodingConfiguration(31, false, 6, 5, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 9, "Balanced");
+let distributedConfiguration = new EncodingConfiguration(31, false, 7, 7, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 7, "Distributed");
+let longDistributedConfiguration = new EncodingConfiguration(63, false, 14, 14, 4, { "rc": 2, "beta": 1, "alpha": 0 }, 14, "Long (signed 64 bits) Distributed");
 
 describe("Simple encoding", () => {
     let defaultConfigurationEncoder = new Encoder(defaultConfiguration);
@@ -151,7 +152,7 @@ describe("Overflows", () => {
             },
         },
         {
-            configuration: new EncodingConfiguration(false, 5, 4, 2, { "prod": 4, "preprod": 3, "rc": 2, "beta": 1, "alpha": 0 }, 9),
+            configuration: new EncodingConfiguration(31, false, 5, 4, 2, { "prod": 4, "preprod": 3, "rc": 2, "beta": 1, "alpha": 0 }, 9),
             expectedErrors: {
                 "0.0.0-prod.1": "Prerelease Tag will overflow allocated bits (4 >= 4).",
                 "0.0.0-preprod.1": "The max allowed Prerelease Tag value (3) should be kept for Semver without Prerelease Tag.",
@@ -219,6 +220,16 @@ describe("Precedence", () => {
     });
 
     it("should be preserved with configuration '" + distributedConfiguration.friendlyName + "'", () => {
+        let lastCode = -1;
+        let distributedConfigurationEncoder = new Encoder(distributedConfiguration);
+        for (let i = 0; i < traits.length; i++) {
+            let code = distributedConfigurationEncoder.encode(traits[i]);
+            expect(code).toBeGreaterThan(lastCode);
+            lastCode = code;
+        }
+    });
+
+    it("should be preserved with configuration '" + longDistributedConfiguration.friendlyName + "'", () => {
         let lastCode = -1;
         let distributedConfigurationEncoder = new Encoder(distributedConfiguration);
         for (let i = 0; i < traits.length; i++) {

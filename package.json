@@ -32,11 +32,16 @@
     },
     "homepage": "https://github.com/geeklearningio/gl-vsts-tasks-semver/wiki",
     "devDependencies": {
-        "async": "2.0.1",
-        "gl-vsts-tasks-build-scripts": "^0.2.0-alpha.5",
-        "jasmine": "~2.5.3",
+        "@types/fs-extra": "^4.0.0",
+        "@types/jasmine": "^2.5.54",
+        "@types/semver": "^5.3.34",
+        "@types/node": "^6.0.0",
+        "@types/q": "^1.0.4",
+        "async": "2.5.0",
+        "gl-vsts-tasks-build-scripts": "^0.4.0-alpha.1",
+        "jasmine": "~2.7.0",
         "jasmine-reporters": "~2.2.1",
-        "karma": "^1.1.2",
-        "npm-run-all": "2.3.0"
+        "karma": "^1.7.0",
+        "npm-run-all": "4.0.2"
     }
 }

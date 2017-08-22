@@ -26,9 +26,10 @@ interface IExpectedErrors {
     [key: string]: string;
 }
 
-let defaultConfiguration = new EncodingConfiguration(5, 4, 2, { "rc": 2, "beta": 1, "alpha": 0, "unstable": 0 }, 9);
-let balancedConfiguration = new EncodingConfiguration(6, 5, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 9, "Balanced");
-let distributedConfiguration = new EncodingConfiguration(7, 7, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 7, "Distributed");
+let onlyPrereleaseConfiguration = new EncodingConfiguration(true, 0, 0, 2, { "rc": 2, "beta": 1, "alpha": 0, "unstable": 0 }, 29);
+let defaultConfiguration = new EncodingConfiguration(false, 5, 4, 2, { "rc": 2, "beta": 1, "alpha": 0, "unstable": 0 }, 9);
+let balancedConfiguration = new EncodingConfiguration(false, 6, 5, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 9, "Balanced");
+let distributedConfiguration = new EncodingConfiguration(false, 7, 7, 2, { "rc": 2, "beta": 1, "alpha": 0 }, 7, "Distributed");
 
 describe("Simple encoding", () => {
     let defaultConfigurationEncoder = new Encoder(defaultConfiguration);
@@ -150,7 +151,7 @@ describe("Overflows", () => {
             },
         },
         {
-            configuration: new EncodingConfiguration(5, 4, 2, { "prod": 4, "preprod": 3, "rc": 2, "beta": 1, "alpha": 0 }, 9),
+            configuration: new EncodingConfiguration(false, 5, 4, 2, { "prod": 4, "preprod": 3, "rc": 2, "beta": 1, "alpha": 0 }, 9),
             expectedErrors: {
                 "0.0.0-prod.1": "Prerelease Tag will overflow allocated bits (4 >= 4).",
                 "0.0.0-preprod.1": "The max allowed Prerelease Tag value (3) should be kept for Semver without Prerelease Tag.",
@@ -226,4 +227,27 @@ describe("Precedence", () => {
             lastCode = code;
         }
     });
+});
+
+describe("Disabled components encoding", () => {
+    let defaultConfigurationEncoder = new Encoder(onlyPrereleaseConfiguration);
+    let traits: ISemverToExpectedCodesMap = {
+        "0.0.0-alpha.0": 0,
+        "0.0.0-alpha.1": 1,
+        "0.0.0-alpha.511": 511,
+        "0.0.0-alpha.2048": 2048,
+        "0.0.0-alpha.5000": 5000,
+        "0.0.0-beta.0": 536870912,
+        "0.0.0-beta.511": 536870912+511,
+    };
+
+    for (let semver in traits) {
+        if (traits.hasOwnProperty(semver)) {
+            let expectedCode = traits[semver];
+            it("should encode '" + semver + "' to '" + expectedCode.toString() + "'", () => {
+                let code = defaultConfigurationEncoder.encode(semver);
+                expect(code).toEqual(expectedCode);
+            });
+        }
+    }
 });

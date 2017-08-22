@@ -11,6 +11,7 @@ export class EncodingConfiguration {
     readonly maxPrereleaseNumberCode = Math.pow(2, this.prereleaseNumberBits) - 1;
 
     constructor(
+        readonly allowZeroBitAllocation: boolean,
         readonly minorBits: number,
         readonly patchBits: number,
         readonly prereleaseTagBits: number,
@@ -25,6 +26,9 @@ export class Encoder {
     }
 
     private checkOverflow(value: number, bits: number, name: string) {
+        if (this.configuration.allowZeroBitAllocation && bits === 0) {
+            return;
+        }
         let maxValue = Math.pow(2, bits);
         if (value >= maxValue) {
             throw new Error(name + " will overflow allocated bits (" + value.toString() + " >= " + maxValue.toString() + ").");
@@ -37,15 +41,21 @@ export class Encoder {
         let code: number = 0;
 
         this.checkOverflow(parsedSemver.major, this.configuration.majorBits, "Major");
-        code += parsedSemver.major;
+        if (this.configuration.majorBits) {
+            code += parsedSemver.major;
+        }
 
         this.checkOverflow(parsedSemver.minor, this.configuration.minorBits, "Minor");
         code = code << this.configuration.minorBits;
-        code += parsedSemver.minor;
+        if (this.configuration.minorBits) {
+            code += parsedSemver.minor;
+        }
 
         this.checkOverflow(parsedSemver.patch, this.configuration.patchBits, "Patch");
         code = code << this.configuration.patchBits;
-        code += parsedSemver.patch;
+        if (this.configuration.patchBits) {
+            code += parsedSemver.patch;
+        }
 
         let prereleaseTagCode = this.configuration.maxPrereleaseTagCode;
         let prereleaseNumberCode = this.configuration.maxPrereleaseNumberCode;
@@ -69,11 +79,15 @@ export class Encoder {
 
         this.checkOverflow(prereleaseTagCode, this.configuration.prereleaseTagBits, "Prerelease Tag");
         code = code << this.configuration.prereleaseTagBits;
-        code += prereleaseTagCode;
+        if (this.configuration.prereleaseTagBits) {
+            code += prereleaseTagCode;
+        }
 
         this.checkOverflow(prereleaseNumberCode, this.configuration.prereleaseNumberBits, "Prerelease Number");
         code = code << this.configuration.prereleaseNumberBits;
-        code += prereleaseNumberCode;
+        if (this.configuration.prereleaseNumberBits) {
+            code += prereleaseNumberCode;
+        }
 
         return code;
     }

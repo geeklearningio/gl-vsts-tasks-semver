@@ -23,13 +23,14 @@ try {
     let preReleaseTagMap: IPrereleaseTagMap = JSON.parse(tl.getInput("PreReleaseTagMap"));
     let preReleaseNumberBits = getNumberInput("PreReleaseNumberBits");
     let outputVariable = tl.getInput("OutputVariable");
+    let disableZeroBitAllocation = tl.getBoolInput("disableZeroBitAllocation");
 
     let varRegex = /\$\((.*?)\)/g;
     sourceSemVer = sourceSemVer.replace(varRegex, (match, varName, offset, s) => tl.getVariable(varName));
 
     console.log("Source Semver: " + sourceSemVer);
 
-    let encoder = new Encoder(new EncodingConfiguration(minorBits, patchBits, preReleaseTagBits, preReleaseTagMap, preReleaseNumberBits));
+    let encoder = new Encoder(new EncodingConfiguration(disableZeroBitAllocation, minorBits, patchBits, preReleaseTagBits, preReleaseTagMap, preReleaseNumberBits));
     let code = checkNaN(encoder.encode(sourceSemVer), "Computed Version Code");
 
     console.log("Computed Version Code: " + code.toString());

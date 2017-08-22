@@ -9,6 +9,7 @@
         "Build",
         "Release"
     ],
+    "preview": true,
     "author": "Geek Learning",
     "version": {
         "Major": 0,
@@ -76,6 +77,13 @@
             "defaultValue": "9",
             "required": true,
             "helpMarkDown": "Bits used to encode PreReleaseNumber"
+        },
+        {
+            "name": "disableZeroBitAllocation",
+            "type": "boolean",
+            "label": "Allow zero bit allocation",
+            "defaultValue": "false",
+            "helpMarkDown": "If this is enabled you can specify a 0 bit allocation for more or one component without it triggering an overflow error."
         }
     ],
     "execution": {
